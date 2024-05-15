@@ -19,13 +19,13 @@ function PetsList() {
     }
   });
 
-  const dropDown = pets.filter((pet) => {
+  const dropDown = petFilter.filter((pet) => {
     if (pet.type.toLowerCase().includes(type.toLowerCase())) {
       return true;
     }
   });
 
-  const petList = petFilter.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const petList = dropDown.map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   return (
     <section id="doctors" className="doctor-section pt-140">
