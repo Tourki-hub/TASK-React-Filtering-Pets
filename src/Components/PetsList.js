@@ -1,8 +1,31 @@
+import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
 
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  const changing = (eve) => {
+    setSearch(eve.target.value);
+  };
+  const cataegory = (eve) => {
+    setType(eve.target.value);
+  };
+  const petFilter = pets.filter((pet) => {
+    if (pet.name.toLowerCase().includes(search.toLowerCase())) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  const dropDown = pets.filter((pet) => {
+    if (pet.type.toLowerCase().includes(type.toLowerCase())) {
+      return true;
+    }
+  });
+
+  const petList = petFilter.map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   return (
     <section id="doctors" className="doctor-section pt-140">
@@ -15,16 +38,17 @@ function PetsList() {
               </h1>
               <div className="input-group rounded">
                 <input
+                  onChange={changing}
                   type="search"
                   className="form-control rounded"
-                  placeholder="Search"
+                  placeholder="search"
                   aria-label="Search"
                   aria-describedby="search-addon"
                 />
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select onChange={cataegory} className="form-select">
                 <option value="" selected>
                   All
                 </option>
